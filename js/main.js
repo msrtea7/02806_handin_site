@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // 获取Markdown文件
-    fetch('content.md')
+    const contentPath = './content.md';
+    fetch(contentPath)
         .then(response => {
             if (!response.ok) {
                 throw new Error('无法加载Markdown文件');
