@@ -1,165 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的作业</title>
-    
-    <!-- 内联CSS样式，确保样式一定会被应用 -->
-    <style>
-        /* 基础页面样式 */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: #24292e;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Markdown内容样式 */
-        .markdown-body {
-            box-sizing: border-box;
-            min-width: 200px;
-            max-width: 980px;
-            margin: 0 auto;
-        }
-
-        /* 标题样式 */
-        .markdown-body h1 {
-            border-bottom: 1px solid #eaecef;
-            padding-bottom: 0.3em;
-        }
-
-        .markdown-body h2 {
-            border-bottom: 1px solid #eaecef;
-            padding-bottom: 0.3em;
-        }
-
-        /* 代码块样式 */
-        .markdown-body pre {
-            background-color: #f6f8fa;
-            border-radius: 3px;
-            padding: 16px;
-            overflow: auto;
-        }
-
-        .markdown-body code {
-            background-color: rgba(27, 31, 35, 0.05);
-            border-radius: 3px;
-            padding: 0.2em 0.4em;
-            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
-        }
-
-        /* 加载状态样式 */
-        .loading {
-            text-align: center;
-            padding: 2em;
-            color: #666;
-        }
-
-        /* 错误状态样式 */
-        .error {
-            color: #d73a49;
-            background-color: #ffeef0;
-            border: 1px solid #ffdce0;
-            border-radius: 3px;
-            padding: 1em;
-        }
-        
-        /* 调试信息 */
-        .debug-info {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-            color: #666;
-        }
-    </style>
-    
-    <!-- 使用多个可能的CDN来确保Marked.js加载成功 -->
+    <link rel="stylesheet" href="./css/styles.css">
+    <!-- Marked.js库用于Markdown渲染 -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('页面加载完成，开始渲染Markdown');
-            
-            // 添加调试信息区域
-            const debugInfo = document.createElement('div');
-            debugInfo.className = 'debug-info';
-            debugInfo.innerHTML = '<h3>调试信息</h3>';
-            document.body.appendChild(debugInfo);
-            
-            // 记录页面信息
-            const logInfo = (message) => {
-                console.log(message);
-                const p = document.createElement('p');
-                p.textContent = message;
-                debugInfo.appendChild(p);
-            };
-            
-            logInfo(`当前URL: ${window.location.href}`);
-            logInfo(`当前路径: ${window.location.pathname}`);
-            
-            // 检查Marked.js是否加载
-            if (typeof marked === 'undefined') {
-                logInfo('错误: Marked.js未加载');
-                document.getElementById('content').innerHTML = '<div class="error">Marked.js库未加载，无法渲染Markdown</div>';
-                return;
-            } else {
-                logInfo('Marked.js加载成功');
-            }
-            
-            // 使用内联Markdown内容，避免加载外部文件
-            const markdown = `# 我的作业标题
-
-这是一个Markdown文件的示例。
-
-## 二级标题
-
-- 列表项1
-- 列表项2
-- 列表项3
-
-### 代码示例
-
-\`\`\`javascript
-function hello() {
-    console.log("Hello, world!");
-}
-\`\`\``;
-            
-            try {
-                // 尝试使用不同的Marked.js调用方式
-                let html;
-                if (typeof marked.parse === 'function') {
-                    logInfo('使用 marked.parse() 方法');
-                    html = marked.parse(markdown);
-                } else {
-                    logInfo('使用 marked() 方法');
-                    html = marked(markdown);
-                }
-                
-                // 渲染HTML
-                document.getElementById('content').innerHTML = html;
-                logInfo('Markdown渲染完成');
-                
-                // 显示最终HTML (用于调试)
-                const rendered = document.getElementById('content').innerHTML;
-                logInfo(`渲染后的HTML (前50个字符): ${rendered.substring(0, 50)}...`);
-            } catch (error) {
-                logInfo(`渲染出错: ${error.message}`);
-                document.getElementById('content').innerHTML = `<div class="error">渲染失败: ${error.message}</div>`;
-            }
-        });
-    </script>
+    <script src="./js/main.js"></script>
 </head>
 <body>
     <div id="content" class="markdown-body">
+        <!-- Markdown内容将被渲染到这里 -->
         <div class="loading">加载中...</div>
     </div>
 </body>
